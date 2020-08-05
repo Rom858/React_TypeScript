@@ -1,11 +1,19 @@
 import * as React from "react";
-import "./styles.css";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Todo, fetchTodos } from "./components/store/actions";
+import { StoreState } from "./components/store/reducers/rootReducer";
 
-export default function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-    </div>
-  );
+interface AppProps {
+  todos: Todo[];
+  fetchTodos(): any;
 }
+const App: React.FC<AppProps> = () => {
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+  const gettodos = useSelector<StoreState>((state: StoreState) => state.todos);
+  console.log(gettodos);
+  return <>Hello</>;
+};
+export default App;
