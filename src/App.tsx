@@ -1,24 +1,17 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import { useSelector } from "react-redux";
-import { Todo, fetchTodos } from "./components/store/actions";
-import { StoreState } from "./components/store/reducers/rootReducer";
+import { useDispatch } from "react-redux";
+import { fetchTodos } from "./components/store/actions";
 
-export interface AppProps {
-  todos: Todo[];
-  fetchTodos(): any;
-}
-const App: React.FC<AppProps> = () => {
+const App: React.FC = () => {
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    fetchTodos();
+    dispatch(fetchTodos());
   }, []);
-  return <>Hello</>;
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  );
 };
 export default App;
-const mapStateToProps = ({ todos }: StoreState): { todos: Todo[] } => {
-  return { todos };
-};
-export const _App = connect(
-  mapStateToProps,
-  { fetchTodos }
-)(App);
