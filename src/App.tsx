@@ -1,16 +1,27 @@
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import { fetchTodos } from "./components/store/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { Todo, fetchTodos } from "./components/store/actions";
 
+interface TodoList {
+  todos: Todo[];
+}
 const App: React.FC = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchTodos());
-  }, []);
+  }, [dispatch]);
+  const getTodoList = (state: TodoList) => state.todos;
+  const mapTodoList = useSelector(getTodoList);
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+      {mapTodoList.map(todo => (
+        <div key={todo.id}>
+          <h3>
+            {todo.id}: Todo: {todo.title}
+          </h3>
+          <h3>Completed: {todo.completed ? "True" : "False"}</h3>
+        </div>
+      ))}
     </div>
   );
 };
